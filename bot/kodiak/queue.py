@@ -242,9 +242,10 @@ class RedisWebhookQueue:
             if not worker_task.done():
                 return
             logger.info("task failed")
+            logger.info("version 2")
             # task failed. record result and restart
             exception = worker_task.exception()
-            exception.print_stack()
+            worker_task.print_stack()
             logger.info("exception", excep=exception)
             sentry_sdk.capture_exception(exception)
         logger.info("creating task for queue")
@@ -278,7 +279,7 @@ class RedisWebhookQueue:
         worker for the queue.
         3. add event
         4. start worker (will create new worker if one does not exist)
-        
+
         returns position of event in queue
         """
         queue_name = get_merge_queue_name(event)
