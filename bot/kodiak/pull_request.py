@@ -44,6 +44,8 @@ async def get_pr(
         if event is None:
             log.info("failed to find event")
             return None
+        log.info("event")
+        log.info(event)
         return PRV2(
             event,
             install=install,
@@ -85,6 +87,7 @@ async def evaluate_pr(
             ),
             timeout=10,
         )
+        log.info("got_pr")
         if pr is None:
             log.info("failed to get_pr")
             return

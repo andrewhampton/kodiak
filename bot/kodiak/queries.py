@@ -862,6 +862,7 @@ class Client:
             branch=branch_name
         )
 
+        log.info('sending query')
         res = await self.send_query(
             query=GET_EVENT_INFO_QUERY,
             variables=dict(
@@ -876,13 +877,18 @@ class Client:
         if res is None:
             return None
 
+        log.info('got response')
         data = res.get("data")
+        log.info(data)
         errors = res.get("errors")
+        log.info(errors)
         if errors is not None or data is None:
             log.error("could not fetch event info", res=res)
             return None
 
+        log.info('getting repo')
         repository = get_repo(data=data)
+        log.info(repository)
         if not repository:
             log.warning("could not find repository")
             return None

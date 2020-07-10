@@ -244,6 +244,7 @@ class RedisWebhookQueue:
             logger.info("task failed")
             # task failed. record result and restart
             exception = worker_task.exception()
+            exception.print_stack()
             logger.info("exception", excep=exception)
             sentry_sdk.capture_exception(exception)
         logger.info("creating task for queue")
